@@ -7,8 +7,6 @@ router.post('/upload', upload.single('docs'), async (req, res)=>{
     const userparams = req.body;
     const userfile = req.file;
     console.log(userfile);
-    userparams.filename = userfile.filename;
-    console.log(userparams);
 
     if(!userparams.name || !userparams.email)
     {
@@ -21,7 +19,9 @@ router.post('/upload', upload.single('docs'), async (req, res)=>{
             .send("Please upload file");
         return;
     } 
-
+    
+    userparams.filename = userfile.filename;
+    console.log(userparams);
     let user = new Profile(userparams);
     user = await user.save();
 
