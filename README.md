@@ -88,7 +88,25 @@ router.post('/upload', upload.single('docs'), async (req, res)=>{
 
 })
 ```
+### `file upload with AWS-S3` 
+```
+    S3.upload(s3_params, async (error, data)=>{
+        if(error)
+        {
+            res.status(500).send(error);
+        }
 
+        userparams.file_orgname = userfile.originalname;
+        userparams.file_url = data.Location;
+        userparams.file_name = data.key;
+        console.log(userparams);
+
+        let user = new Profile(userparams);
+        user = await user.save();
+
+        res.status(200).send({data, userparams});
+    });
+```
 
 
 

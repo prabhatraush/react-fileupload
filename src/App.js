@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
 
-
-
 function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,6 +24,9 @@ function App() {
       console.log(res);
       console.log(msg);
       alert(msg);
+      setName('');
+      setEmail('');
+      setFile('');
     })
     .catch(err =>{
       setMsg("Please enter name or upload file");
@@ -38,8 +39,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      
-      const response = await axios.post("http://localhost:4000/getprofile")
+       await axios.post("http://localhost:4000/getprofile")
       .then(res =>{
         console.log(res);
         setFetched(res.data);
@@ -52,29 +52,21 @@ function App() {
     fetchData();
   }, []);
 
-  console.log(fetched);
-  // const handleUplaod = async () =>{
-  //   const response = await axios.post("http://localhost:4000/upload", {file:doc});
-  //   if(response)
-  //   {
-  //     console.log(response);
-  //   }
-  // }
-
   return (
     <div className="App">
      <div className="contact-card">
        <input type="text" onChange={(e)=>{setName(e.target.value)}} value={name} placeholder="enter your name" />
        <input type="email" onChange={(e)=>{setEmail(e.target.value)}} value={email} placeholder="enter your email" />
-       <input type="file" name="docs" onChange={(e) => {
+       <input type="file" name="docs"  onChange={(e) => {
          setFile( e.target.files[0]);
-       }} />
+       }} 
+       />
        <button type="button" onClick={handleSubmit}>Submit</button>
      </div>
      <div>
        <ol>{
          fetched.map(data=>{
-           return <li key={data._id}>{ data.name} - {data.email} - {data.filename}</li>
+         return <li key={data._id}>{ data.name} - {data.email} - <a href={data.file_url}>File URL</a>- {data.file_orgname}</li>
          })
        }
        </ol>
