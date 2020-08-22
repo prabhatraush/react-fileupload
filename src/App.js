@@ -63,13 +63,24 @@ function App() {
        />
        <button type="button" onClick={handleSubmit}>Submit</button>
      </div>
-     <div>
-       <ol>{
+     <div className="show-cards">
+       <table>
+         <thead>
+           <tr>
+             <th>Name</th>
+             <th>Email</th>
+             <th>Photos</th>
+             <th>File Name</th>
+           </tr>
+         </thead>
+         <tbody>
+         {
          fetched.map(data=>{
-         return <li key={data._id}>{ data.name} - {data.email} - <a href={data.file_url}>File URL</a>- {data.file_orgname}</li>
+         return <tr><td>{data.name}</td><td>{data.email} </td><td><img  src={data.file_url} alt={data.file_orgname} /></td><td>{data.file_orgname}</td></tr>
          })
        }
-       </ol>
+       </tbody>
+       </table>
      </div>
     </div>
   );
