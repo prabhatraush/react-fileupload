@@ -52,9 +52,16 @@ const profileSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    filename: {
+    file_orgname: {
+        type: String
+    },
+    file_url: {
+        type: String
+    },
+    file_name: {
         type: String
     }
+
 });
 ```
 
